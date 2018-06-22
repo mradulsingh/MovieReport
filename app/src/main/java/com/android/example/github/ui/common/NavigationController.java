@@ -19,7 +19,6 @@ package com.android.example.github.ui.common;
 import com.android.example.github.MainActivity;
 import com.android.example.github.R;
 import com.android.example.github.ui.movie.MovieListFragment;
-import com.android.example.github.ui.movie.MoviesFilterFragment;
 import com.android.example.github.ui.repo.RepoFragment;
 import com.android.example.github.ui.search.SearchFragment;
 import com.android.example.github.ui.user.UserFragment;

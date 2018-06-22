@@ -1,8 +1,11 @@
 package com.android.example.github.vo;
 
-public class MovieResponse {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    private MoviesInfo[] results;
+public class MovieResponse implements Parcelable{
+
+    private MovieInfoo[] results;
 
     private String page;
 
@@ -10,11 +13,29 @@ public class MovieResponse {
 
     private String total_results;
 
-    public MoviesInfo[] getResults() {
+    protected MovieResponse(Parcel in) {
+        page = in.readString();
+        total_pages = in.readString();
+        total_results = in.readString();
+    }
+
+    public static final Creator<MovieResponse> CREATOR = new Creator<MovieResponse>() {
+        @Override
+        public MovieResponse createFromParcel(Parcel in) {
+            return new MovieResponse(in);
+        }
+
+        @Override
+        public MovieResponse[] newArray(int size) {
+            return new MovieResponse[size];
+        }
+    };
+
+    public MovieInfoo[] getResults() {
         return results;
     }
 
-    public void setResults(MoviesInfo[] results) {
+    public void setResults(MovieInfoo[] results) {
         this.results = results;
     }
 
@@ -45,6 +66,18 @@ public class MovieResponse {
     @Override
     public String toString() {
         return "ClassPojo [results = " + results + ", page = " + page + ", total_pages = " + total_pages + ", total_results = " + total_results + "]";
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(page);
+        parcel.writeString(total_pages);
+        parcel.writeString(total_results);
     }
 }
 

@@ -25,7 +25,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.android.example.github.ui.common.NavigationController;
 import com.android.example.github.ui.movie.MovieListFragment;
-import com.android.example.github.ui.movie.MoviesFilterFragment;
 
 import javax.inject.Inject;
 
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         setContentView(R.layout.main_activity);
         if (savedInstanceState == null) {
             navigationController.navigateToMovieFilterFragment();
+//            navigationController.navigateToSearch();
         }
 //        FragmentManager manager = getSupportFragmentManager();
 //        FragmentTransaction transaction = manager.beginTransaction();

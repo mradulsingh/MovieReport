@@ -79,7 +79,7 @@ public class RepoFragment extends Fragment implements Injectable {
         LiveData<Resource<Repo>> repo = repoViewModel.getRepo();
         repo.observe(this, resource -> {
             binding.get().setRepo(resource == null ? null : resource.data);
-            binding.get().setRepoResource(resource);
+//            binding.get().setRepoResource(resource);
             binding.get().executePendingBindings();
         });
 

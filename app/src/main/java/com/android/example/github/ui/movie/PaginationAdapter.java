@@ -1,9 +1,9 @@
 package com.android.example.github.ui.movie;
 
 import android.content.Context;
-import android.graphics.Movie;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.example.github.R;
-import com.android.example.github.vo.MoviesInfo;
+import com.android.example.github.vo.MovieInfoo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -28,7 +28,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final int LOADING = 1;
     private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
 
-    private List<Movie> movieResults;
+    private List<MovieInfoo> movieResults;
     private Context context;
 
     private boolean isLoadingAdded = false;
@@ -38,16 +38,17 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         movieResults = new ArrayList<>();
     }
 
-    public List<Movie> getMovies() {
+    public List<MovieInfoo> getMovies() {
         return movieResults;
     }
 
-    public void setMovies(List<Movie> movieResults) {
+    public void setMovies(List<MovieInfoo> movieResults) {
         this.movieResults = movieResults;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
@@ -74,34 +75,31 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        Movie result = movieResults.get(position); // Movie
+        MovieInfoo result = movieResults.get(position); // MovieInfoo
 
         switch (getItemViewType(position)) {
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
 
-//                movieVH.mMovieTitle.setText();
+                movieVH.mMovieTitle.setText(result.getTitle());
 
-
-//                movieVH.mYear.setText(
-////                        result.getReleaseDate().substring(0, 4)  // we want the year only
-////                                + " | "
-////                                + result.getOriginalLanguage().toUpperCase()
-//                );
-//                movieVH.mMovieDesc.setText(result.getOverview());
+                movieVH.mYear.setText(
+                        result.getRelease_date().substring(0, 4)  // we want the year only
+                                + " | "
+                                + result.getOriginal_language().toUpperCase()
+                );
+                movieVH.mMovieDesc.setText(result.getOverview());
 
                 /**
                  * Using Glide to handle image loading.
                  * Learn more about Glide here:
                  *
                  */
-                Glide
-                        .with(context)
-                        .load(BASE_URL_IMG + "")//result.getPosterPath())
+                Glide.with(context)
+                        .load(BASE_URL_IMG + result.getPoster_path())
                         .listener(new RequestListener<String, GlideDrawable>() {
                             @Override
                             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-
                                 movieVH.mProgress.setVisibility(View.GONE);
                                 return false;
                             }
@@ -138,23 +136,22 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
 
-    /*
+    /**
    Helpers
-   _________________________________________________________________________________________________
     */
 
-    public void add(Movie r) {
+    public void add(MovieInfoo r) {
         movieResults.add(r);
         notifyItemInserted(movieResults.size() - 1);
     }
 
-    public void addAll(List<Movie> moveResults) {
-        for (Movie result : moveResults) {
+    public void addAll(List<MovieInfoo> moveResults) {
+        for (MovieInfoo result : moveResults) {
             add(result);
         }
     }
 
-    public void remove(Movie r) {
+    public void remove(MovieInfoo r) {
         int position = movieResults.indexOf(r);
         if (position > -1) {
             movieResults.remove(position);
@@ -176,14 +173,14 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public void addLoadingFooter() {
         isLoadingAdded = true;
-//        add(new Movie());
+        add(new MovieInfoo());
     }
 
     public void removeLoadingFooter() {
         isLoadingAdded = false;
 
         int position = movieResults.size() - 1;
-        Movie result = getItem(position);
+        MovieInfoo result = getItem(position);
 
         if (result != null) {
             movieResults.remove(position);
@@ -191,7 +188,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public Movie getItem(int position) {
+    public MovieInfoo getItem(int position) {
         return movieResults.get(position);
     }
 
@@ -217,8 +214,8 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mMovieTitle = (TextView) itemView.findViewById(R.id.movie_title);
             mMovieDesc = (TextView) itemView.findViewById(R.id.movie_desc);
             mYear = (TextView) itemView.findViewById(R.id.movie_year);
-//            mPosterImg = (ImageView) itemView.findViewById(R.id.movie_poster);
-//            mProgress = (ProgressBar) itemView.findViewById(R.id.movie_progress);
+            mPosterImg = (ImageView) itemView.findViewById(R.id.movieImage);
+            mProgress = (ProgressBar) itemView.findViewById(R.id.movieProgressBar);
         }
     }
 

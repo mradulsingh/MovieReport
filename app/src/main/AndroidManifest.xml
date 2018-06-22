@@ -34,8 +34,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".testing.SingleFragmentActivity" />
-        <activity android:name=".ui.movie.MovieFilterFragment" />
-        <activity android:name=".ui.movie.MovieListFragment" />
+        <!--<activity android:name=".ui.movie.MoviesFilterFragment" />-->
+        <!--<activity android:name=".ui.movie.MovieListFragment" />-->
     </application>
 
 </manifest>
